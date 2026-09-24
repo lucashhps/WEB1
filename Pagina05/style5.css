@@ -1,0 +1,52 @@
+@import url('https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600;700&display=swap');
+
+body {
+    margin: 0;
+    font-family: 'Lora', serif;
+}
+
+.principal{
+    display: flex;
+    margin-left: 5%;
+}
+
+header{
+    display: flex;
+    justify-content: space-between;
+    background-color: #0bb6e0;
+    margin: 0;
+    padding-top: 3%;
+    padding-bottom: 3%;
+    width: 100%;
+}
+
+.header-empresa{
+    margin-left: 5%;
+}
+
+footer{
+    display: flex;
+    background-color: #e98c12;
+    margin: 0;
+    padding-top: 3%;
+    padding-bottom: 3%;
+    width: 100%;
+    justify-content: center;
+}
+
+.links{
+    margin-right: 5%;
+}
+
+.categorias{
+    background-color: #0bf164;
+    width: 100%;
+    margin-left: 5%;
+    padding-left: 5%;
+}
+
+.categorias ul{
+    list-style-type: "- ";
+    margin: 0;
+    padding-left: 5%;
+}
