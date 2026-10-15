@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Painel de Temperaturas Semanais</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <h2>Monitor de Temperaturas Semanais</h2>
+
+  <label for="temperatura">Digite a temperatura (°C):</label><br>
+  <input type="number" id="temperatura" step="0.1">
+  <button onclick="adicionarTemperatura()">Adicionar Temperatura</button><br>
+
+  <h3>Temperaturas Inseridas:</h3>
+  <ul id="listaTemperaturas"></ul>
+
+  <button onclick="calcularMedia()">Calcular Média</button>
+  <button onclick="calcularMediaMovel()">Calcular Média Móvel (últimos 10 dias)</button>
+  <button onclick="detectarTendencias()">Detectar tendências (período de 7 dias)</button>
+  <button onclick="detectaTempExtremas()">Detectar temperaturas extremas</button>
+
+  <div id="resultado"></div>
+
+  <script>
+    const temperaturas = [];
+
+    function adicionarTemperatura() {
+      const input = document.getElementById('temperatura');
+      const valor = parseFloat(input.value);
+
+      if (isNaN(valor)) {
+        alert("Por favor, insira um número válido.");
+        return;
+      }
+
+      temperaturas.push(valor);
+
+      const lista = document.getElementById('listaTemperaturas');
+      const item = document.createElement('li');
+      item.textContent = valor + " °C";
+      lista.appendChild(item);
+
+      input.value = "";
+      input.focus();
+    }
+
+    function getMedia(lista){
+      let n = lista.length;
+      let soma = 0;
+      let media;
+      if(n > 0){
+          for (let i = 0; i < n; i++){
+              soma += lista[i];
+          }
+          return soma/n;
+      }
+      return undefined;
+    }
+
+    function getMediaMovel(lista, dtIn, periodo){
+      let newList = [];
+      for (let i = dtIn; i < dtIn + periodo; i++){
+        newList.push(lista[i]);
+      }
+      return getMedia(newList);
+    }
+
+    function calcularMedia() {
+      if (temperaturas.length === 0) {
+        alert("Nenhuma temperatura foi inserida.");
+        return;
+      }
+
+      let media = getMedia(temperaturas);
+
+      let mensagem;
+      if (media > 30) {
+        mensagem = "A semana está quente! 🔥";
+      } else if (media >= 20 && media <= 30) {
+        mensagem = "Temperatura amena. 🌤️";
+      } else {
+        mensagem = "Semana fria! ❄️";
+      }
+
+      const resultado = document.getElementById('resultado');
+      resultado.innerHTML = `
+        <p>Média das temperaturas: <strong>${media.toFixed(2)} °C</strong></p>
+        <div class="alerta">${mensagem}</div>
+      `;
+    }
+
+    function calcularMediaMovel() {
+      if (temperaturas.length !== 10) {
+        alert("Por favor, insira as temperaturas dos últimos 10 dias!");
+        return;
+      }
+
+      let mediaMov1 = getMediaMovel(temperaturas, 0, 3);
+      let mediaMov2 = getMediaMovel(temperaturas, 3, 3);
+      let mediaMov3 = getMediaMovel(temperaturas, 6, 3);
+
+      const resultado = document.getElementById('resultado');
+      resultado.innerHTML = `
+        <p>Média das temperaturas nos três primeiros dias: <strong>${mediaMov1.toFixed(2)} °C</strong></p>
+        <p>Média das temperaturas do terceiro ao sexto dia: <strong>${mediaMov2.toFixed(2)} °C</strong></p>
+        <p>Média das temperaturas nos três últimos dias: <strong>${mediaMov3.toFixed(2)} °C</strong></p>
+      `;
+    }
+
+    function isListaCrescente(lista){
+      if(lista.length <= 1){
+        alert("Insira uma lista de tamanho válido!");
+        return;
+      }
+
+      aux = lista[0];
+      i = 1;
+      while (lista[i] >= lista[i - 1]) {
+        if(i == lista.length - 1){
+          return true;
+        }
+        i++;
+      }
+      return false;
+    }
+
+    function isListaDecresente(lista){
+      if(lista.length <= 1){
+        alert("Insira uma lista de tamanho válido!");
+        return;
+      }
+
+      i = 1;
+      while (lista[i] <= lista[i - 1]) {
+        if(i == lista.length - 1){
+          return true;
+        }
+        i++;
+      }
+      return false;
+    }
+
+    function detectarTendencias() {
+      if (temperaturas.length !== 7) {
+        alert("Por favor, insira **apenas** 7 valores!");
+        return;
+      }
+
+      if(isListaCrescente(temperaturas)){
+        alert("Tendência de aquecimento detectada no período de 7 dias!");
+      } else if(isListaDecresente(temperaturas)){
+        alert("Tendência de resfriamento detectada no período de 7 dias!");
+      } else {
+        alert("Nenhuma tendência detectada no período de 7 dias!");
+      }
+    }
+
+    function detectaTempExtremas(){
+      let RESET_VALUE = 0;
+      if(temperaturas.length <= 1){
+        alert("Insira uma lista de tamanho válido!");
+        return;
+      }
+      let acima35 = 0;
+      let i_acima35 = 0;
+      let abaixo5 = 0;
+      let i_abaixo5 = 0;
+
+      for (let i = 0; i < temperaturas.length; i++){
+        if(temperaturas[i] >= 35){
+          i_acima35++;
+          i_abaixo5 = RESET_VALUE;
+        } else if(temperaturas[i] <= 5){
+          i_abaixo5++;
+          i_acima5 = RESET_VALUE;
+        } else{
+          i_acima35 = RESET_VALUE;
+          i_abaixo5 = RESET_VALUE;
+        }
+        
+        if(i_acima35 == 3){
+          acima35++;
+          i_acima35 = RESET_VALUE;
+        }
+
+        if(i_abaixo5 == 3){
+          abaixo5++;
+          i_abaixo5 = RESET_VALUE;
+        }
+      }
+      alert("Encontrado " + acima35 + " ocorrências de temperaturas extremas por três dias consecutivos acima de 35°C\ne " + abaixo5 + " ocorrências de temperaturas extremas por três dias consecutivos abaixo de 5°C");
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Encontra número de maiores e menores de 18 anos</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <h2>Encontra número de maiores e menores de 18 anos</h2>
+
+  <label for="valores">Digite os valores:</label><br>
+  <input type="text" id="valores">
+  <button onclick="encontrarNumeros()">Encontrar</button><br>
+
+  <script>
+    let IDADE = 18;
+    function encontrarNumeros() {
+      let valores = document.getElementById("valores").value;
+      valores = valores.split(",");
+      
+      let maiores = 0;
+      let menores = 0;
+      for (i = 0; i < valores.length; i++){
+        aux = parseInt(valores[i]);
+        if (!isNaN(valores[i]) && aux >= IDADE) {
+          maiores++;
+        } else {
+          menores++;
+        }
+      }
+      document.write("Maiores de " + IDADE + " anos " + maiores + "<br>");
+      document.write("Menores de " + IDADE + " anos " + menores);
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Calculadora de quadrados</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <h2>Calculadora de quadrados</h2>
+
+  <label for="valores">Digite os valores:</label><br>
+  <input type="text" id="valores">
+  <button onclick="calcularQuadrados()">Calcular quadrados</button><br>
+
+  <script>
+    function calcularQuadrados() {
+      let valores = document.getElementById("valores").value;
+      valores = valores.split(",");
+      for (i = 0; i < valores.length; i++){
+        if (!isNaN(valores[i])) {
+          quadrado = parseInt(valores[i]) * parseInt(valores[i]);
+          document.write("O quadrado de " + valores[i] + " é " + quadrado + "<br>");
+        }
+      }
+    }
+  </script>
+
+</body>
+</html>

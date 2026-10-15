@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Calcula estatísticas</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h2>Calcula estatísticas</h2>
+
+  <label for="entrada">Insira os valores</label><br>
+  <input type="text" id="entrada">
+  <button onclick="processar()">Calcular</button><br>
+
+  <div id="resultado"></div>
+
+  <script>
+    function calcularMedia(lista) {
+        let n = lista.length;
+        let soma = 0;
+        if(n > 0){
+            for (let i = 0; i < n; i++){
+                soma += lista[i];
+            }
+            return soma/n;
+        }
+        return undefined;
+    }
+    
+    function encontrarPositivosNegativos(lista, polaridade) {
+        let resultado = [];
+        for (let i = 0; i < lista.length; i++){
+            if (lista[i] >= 0 && polaridade > 0){
+                resultado.push(lista[i])
+            } else if (lista[i] < 0 && polaridade < 0){
+                resultado.push(lista[i])
+            }
+        }
+        return resultado;
+
+    }
+
+    function percentualLista(sublista, lista) {
+        if(lista.length != 0) {
+            return sublista.length/lista.length;
+        }
+        return NaN;
+    }
+    
+
+    function processar() {
+        let entrada = document.getElementById('entrada').value;
+        let numeros = entrada.split(',').map(Number);
+
+        let media = calcularMedia(numeros);
+        let valoresPositivos = encontrarPositivosNegativos(numeros, 1);
+        let valoresNegativos = encontrarPositivosNegativos(numeros, -1);
+        let percentualPositivos = percentualLista(valoresPositivos, numeros) * 100 + "%";
+        let percentualNegativos = percentualLista(valoresNegativos, numeros) * 100 + "%";
+
+        document.getElementById('resultado').innerHTML = document.getElementById('resultado').innerHTML + "Médias aritméticas: " + media + "<br>";
+        document.getElementById('resultado').innerHTML = document.getElementById('resultado').innerHTML + "Valores positivos: " + valoresPositivos.join(',') + "<br>";
+        document.getElementById('resultado').innerHTML = document.getElementById('resultado').innerHTML + "Valores negativos: " + valoresNegativos.join(',') + "<br>";
+        document.getElementById('resultado').innerHTML = document.getElementById('resultado').innerHTML + "Percentual de positivos: " + percentualPositivos + "<br>";
+        document.getElementById('resultado').innerHTML = document.getElementById('resultado').innerHTML + "Percentual de negativos: " + percentualNegativos + "<br><br>";
+    }
+  </script>
+</body>
+</html>

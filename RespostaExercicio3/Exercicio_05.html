@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Quebra-datas</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h2>Inverter texto</h2>
+
+  <label for="valores">Digite o valor:</label><br>
+  <input type="text" id="valores">
+  <button onclick="inverterTexto()">Inverter</button><br>
+
+  <div id="resultado"></div>
+
+  <script>
+        function inverterTexto() {
+            let texto = document.getElementById('valores').value;
+            let invertido = texto.split('').reverse().join('');
+
+            document.write("Texto invertido: " + invertido);
+            }
+  </script>
+</body>
+</html>

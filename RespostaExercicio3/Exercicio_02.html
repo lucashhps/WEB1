@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Encontra maior valor</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <h2>Encontra maior valor</h2>
+
+  <label for="valores">Digite os valores:</label><br>
+  <input type="text" id="valores">
+  <button onclick="encontrarMaiorValor()">Encontra maior valor</button><br>
+
+  <script>
+    function encontrarMaiorValor() {
+      let valores = document.getElementById("valores").value;
+      valores = valores.split(",");
+      let maior = parseInt(valores[0]);
+      let aux;
+      for (i = 0; i < valores.length; i++){
+        aux = parseInt(valores[i]);
+        if (!isNaN(valores[i]) && maior < aux) {
+          maior = aux;
+        }
+      }
+      document.write("O maior valor passado é " + maior);
+    }
+  </script>
+
+</body>
+</html>

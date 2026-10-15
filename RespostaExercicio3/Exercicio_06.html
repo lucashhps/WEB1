@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Ordena</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h2>Ordena inteiros</h2>
+
+  <label for="valores">Digite o valor:</label><br>
+  <input type="text" id="valores">
+  <button onclick="ordenaInteiros()">Ordenar</button><br>
+
+  <div id="resultado"></div>
+
+  <script>
+        function ordenaInteiros() {
+            let inteiros = document.getElementById('valores').value;
+            let numerosStr = inteiros.split(',').map(Number);
+
+            let numeros = [];
+            for (i = 0; i < numerosStr.length; i++){
+                numeros.push(parseInt(numerosStr[i]));
+            }
+
+            numeros.sort((a, b) => {
+                return a - b
+            });
+
+            document.write("Lista ordenada: " + numeros.join(", "));
+            }
+  </script>
+</body>
+</html>

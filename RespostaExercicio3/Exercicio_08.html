@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Calcula fatorial</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h2>Calcula fatorial</h2>
+
+  <label for="entrada">Insira os valores</label><br>
+  <input type="text" id="entrada">
+  <button onclick="processar()">Calcular</button><br>
+
+  <div id="resultado"></div>
+
+  <script>
+    function calcularFatorial(n) {
+          if(!isNaN(n) && n >= 0){
+            if(n == 0 || n == 1) {
+              return 1;
+            }
+            return n*calcularFatorial(n - 1);
+
+          }
+        }
+
+    function processar() {
+        let entrada = document.getElementById('entrada').value;
+        let numeros = entrada.split(',').map(Number);
+
+        let fatoriais = numeros.map(function(num) {
+            return num + "! = " + calcularFatorial(num);
+        });
+
+        document.getElementById('resultado').innerHTML = fatoriais.join('<br>');
+    }
+  </script>
+</body>
+</html>
